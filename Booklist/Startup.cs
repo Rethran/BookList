@@ -10,6 +10,8 @@ namespace Booklist
 {
     public class Startup
     {
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -20,8 +22,22 @@ namespace Booklist
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("policy11",
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:5001/api",
+                                "https://localhost:4200")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                });
+
+                // In production, the Angular files will be served from this directory
+
+            });
             services.AddControllersWithViews();
-            // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -48,14 +64,15 @@ namespace Booklist
             {
                 app.UseSpaStaticFiles();
             }
-            
-            app.UseRouting();
 
+            app.UseRouting();
+            app.UseCors();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "api/{id?}");
             });
 
             app.UseSpa(spa =>
@@ -73,3 +90,4 @@ namespace Booklist
         }
     }
 }
+

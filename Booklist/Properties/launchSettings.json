@@ -16,8 +16,6 @@
       }
     },
     "Booklist": {
-      "windowsAuthentication": false,
-      "anonymousAuthentication": true,
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
