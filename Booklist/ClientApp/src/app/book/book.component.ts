@@ -13,16 +13,13 @@ export class BookComponent {
   public books: Book[];
   public book: Book;
   selectedBook: Book;
-  currentlyEditedBook: Book;
-  currentlyEditedBookTitle: string = "";
-  currentlyEditedBookAuthor: string = "";
-  currentlyEditedBookDescription: string = "";
-  currentlyEditedBookId: number;
+ 
   constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
     this.getAllBooks();
   }
   selectedBookTitle: string = "";
   selectedBookAuthor: string = "";
+  selectedBookDescription: string = "";
   selectedbookId: number;
   getAllBooks(): Subscription {
     return this.http.get<Book[]>(this.baseUrl + 'api/').subscribe(result => {
@@ -34,7 +31,7 @@ export class BookComponent {
     this.selectedBook = selectedBook;
     this.selectedBookTitle = selectedBook.title;
     this.selectedBookAuthor = selectedBook.author;
-    this.currentlyEditedBook = selectedBook;
+    this.selectedBookDescription = selectedBook.description;
     console.log(selectedBook);
   }
   OnDelete(selectedBook: Book): void {
@@ -51,7 +48,8 @@ export class BookComponent {
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify({
       title: this.selectedBookTitle,
-      author: this.selectedBookAuthor
+      author: this.selectedBookAuthor,
+      description: this.selectedBookDescription
     });
 
     return this.http.post<Book>(this.baseUrl + 'api/', body, { 'headers': headers }).subscribe(result => {
@@ -67,13 +65,16 @@ export class BookComponent {
     console.log(this.selectedBookTitle)
     const body = ({
       title: this.selectedBookTitle,
-      author: this.selectedBookAuthor
+      author: this.selectedBookAuthor,
+      description: this.selectedBookDescription
     });
     return this.http.put<Book>(this.baseUrl + 'api/' + this.selectedBook.id, body, { 'headers': headers }).subscribe(result => {
 
       var bookIndex = this.books.findIndex(p => p.id == this.selectedBook.id);
       this.books[bookIndex].title = this.selectedBookTitle;
       this.books[bookIndex].author = this.selectedBookAuthor;
+      this.books[bookIndex].description = this.selectedBookDescription;
+
 
     })
   }

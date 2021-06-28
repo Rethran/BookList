@@ -41,22 +41,5 @@ namespace Booklist
             get { return _description; }
             set { _description = value; }
         }
-
-        public void AddBook(Book book)
-        {
-            book.Id = bookList.Count > 0 ? bookList.Max(x => x.Id) + 1 : 1;
-            bookList.Add(book);
-        }
-        public void RemoveBook(Book oldBook)
-        {
-            bookList.Remove(oldBook);
-            bookList.ForEach((x) => { if (x.Id > oldBook.Id) x.Id -= 1; });
-        }
-        public void getSingleBook(int id)
-        {
-
-            var item = bookList.Find(x => x.Id == id);
-
-        }
     }
 }
