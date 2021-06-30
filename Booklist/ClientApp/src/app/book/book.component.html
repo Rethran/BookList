@@ -2,40 +2,42 @@
 
 <p *ngIf="!books"><em>Loading...</em></p>
 
+<div id="parentDiv">
 
-<div id = "rightDiv" [className]="'div#rightDiv'">
-  <ul *ngFor="let book of books index as i;">
-    <li (click)=selectBook(book)>
 
-      {{book.title}} {{book.author}}
-    </li>
-  </ul>
-  
+  <div id="listDiv">
+    <ul *ngFor="let book of books index as i;">
+      <li (click)=selectBook(book)>
+
+        {{book.title}} {{book.author}}
+      </li>
+    </ul>
+
+  </div>
+
+  <div id="formDiv">
+    <label>
+      Title
+    </label>
+    <input id="selectedBookTitle"
+           [(ngModel)]="selectedBookTitle" />
+
+
+    <label>
+      Author
+    </label>
+    <input id="selectedBookAuthor"
+           [(ngModel)]="selectedBookAuthor" />
+    <label>
+      Description
+    </label>
+    <input id="selectedBookDescription"
+           [(ngModel)]="selectedBookDescription" />
+
+
+    <button type="button" (click)="saveBook()">Save</button>
+    <button type="button" (click)="addBook()">Save new</button>
+    <button type="button" (click)="deleteBook(selectedBook)">Delete</button>
+  </div>
 </div>
-
-<div id = "leftDiv" [className]="'div#leftDiv'">
-  <label>
-    Title
-  </label>
-  <input id="selectedBookTitle"
-         [(ngModel)]="selectedBookTitle" />
-
-
-  <label>
-    Author
-  </label>
-  <input id="selectedBookAuthor"
-         [(ngModel)]="selectedBookAuthor" />
-  <label>
-    Description
-  </label>
-  <input id="selectedBookDescription"
-         [(ngModel)]="selectedBookDescription" />
-
-
-  <button type="button" (click)="saveBook()">Save</button>
-  <button type="button" (click)="addBook()">Save new</button>
-  <button type="button" (click)="deleteBook(selectedBook)">Delete</button>
-</div>
-
 

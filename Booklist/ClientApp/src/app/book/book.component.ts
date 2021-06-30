@@ -35,9 +35,6 @@ export class BookComponent {
   deleteBook(selectedBook: Book): void {
     this.http.delete(this.baseUrl + 'api/' + selectedBook.id).subscribe(result => {
       this.books = this.books.filter(book => book !== selectedBook);
-      console.log(result);
-      console.log('did this deleted the book' + selectedBook);
-
     }, error => console.error(error
     ));
   }
