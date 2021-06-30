@@ -3,9 +3,9 @@
 <p *ngIf="!books"><em>Loading...</em></p>
 
 
-<div id = "test1" [className]="'div#test1'">
+<div id = "rightDiv" [className]="'div#rightDiv'">
   <ul *ngFor="let book of books index as i;">
-    <li (click)=onEdit(book)>
+    <li (click)=selectBook(book)>
 
       {{book.title}} {{book.author}}
     </li>
@@ -13,29 +13,29 @@
   
 </div>
 
-<div id = "test2" [className]="'div#test2'">
+<div id = "leftDiv" [className]="'div#leftDiv'">
   <label>
     Title
   </label>
-  <input id="selectedBooktitle"
+  <input id="selectedBookTitle"
          [(ngModel)]="selectedBookTitle" />
 
 
   <label>
     Author
   </label>
-  <input id="selectedBookauthor"
+  <input id="selectedBookAuthor"
          [(ngModel)]="selectedBookAuthor" />
   <label>
     Description
   </label>
-  <input id="selectedBookdescription"
+  <input id="selectedBookDescription"
          [(ngModel)]="selectedBookDescription" />
 
 
-  <button (click)="saveBook()" type="button">Save</button>
+  <button type="button" (click)="saveBook()">Save</button>
   <button type="button" (click)="addBook()">Save new</button>
-  <button type="button" (click)="OnDelete(selectedBook)">Delete</button>
+  <button type="button" (click)="deleteBook(selectedBook)">Delete</button>
 </div>
 
 

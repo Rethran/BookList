@@ -23,20 +23,6 @@ namespace Booklist
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("policy11",
-                builder =>
-                {
-                    builder.WithOrigins("https://localhost:5001/api",
-                                "https://localhost:4200")
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
-                });
-
-                // In production, the Angular files will be served from this directory
-
-            });
             services.AddControllersWithViews();
             services.AddSpaStaticFiles(configuration =>
             {
@@ -66,7 +52,7 @@ namespace Booklist
             }
 
             app.UseRouting();
-            app.UseCors();
+          
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

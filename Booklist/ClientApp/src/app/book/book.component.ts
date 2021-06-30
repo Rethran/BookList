@@ -11,30 +11,28 @@ import { Subscription } from 'rxjs';
 })
 export class BookComponent {
   public books: Book[];
-  public book: Book;
   selectedBook: Book;
  
   constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
-    this.getAllBooks();
+    this.getBooks();
   }
   selectedBookTitle: string = "";
   selectedBookAuthor: string = "";
   selectedBookDescription: string = "";
   selectedbookId: number;
-  getAllBooks(): Subscription {
+  getBooks(): Subscription {
     return this.http.get<Book[]>(this.baseUrl + 'api/').subscribe(result => {
       this.books = result;
     });
   }
-  onEdit(selectedBook: Book) {
+  selectBook(selectedBook: Book): void {
 
     this.selectedBook = selectedBook;
     this.selectedBookTitle = selectedBook.title;
     this.selectedBookAuthor = selectedBook.author;
     this.selectedBookDescription = selectedBook.description;
-    console.log(selectedBook);
   }
-  OnDelete(selectedBook: Book): void {
+  deleteBook(selectedBook: Book): void {
     this.http.delete(this.baseUrl + 'api/' + selectedBook.id).subscribe(result => {
       this.books = this.books.filter(book => book !== selectedBook);
       console.log(result);
@@ -53,16 +51,12 @@ export class BookComponent {
     });
 
     return this.http.post<Book>(this.baseUrl + 'api/', body, { 'headers': headers }).subscribe(result => {
-      console.log(result);
       this.books.push(result);
     });
   }
-  saveBook() {
-    // currentlyEditedBook.title = (event.target as HTMLInputElement).value;
-    //currentlyEditedBook.author = (event.target as HTMLInputElement).value;
-    //currentlyEditedBook.description = (event.target as HTMLInputElement).value;
+  saveBook(): Subscription {
+  
     const headers = { 'content-type': 'application/json' }
-    console.log(this.selectedBookTitle)
     const body = ({
       title: this.selectedBookTitle,
       author: this.selectedBookAuthor,

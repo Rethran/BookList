@@ -7,7 +7,7 @@ namespace Booklist
 {
     public class BookRepository : IBookRepository
     {
-        private List<Book> books2 = new List<Book>();
+        private List<Book> books = new List<Book>();
         private int _nextId = 1;
 
         public BookRepository()
@@ -18,11 +18,11 @@ namespace Booklist
         }
         public Book Get(int id)
         {
-            return books2.Find(p => p.Id == id);
+            return books.Find(p => p.Id == id);
         }
         public IEnumerable<Book> GetAll()
         {
-            return books2;
+            return books;
         }
         public Book Add(Book book)
         {
@@ -31,12 +31,12 @@ namespace Booklist
                 throw new ArgumentNullException("book");
             }
             book.Id = _nextId++;
-            books2.Add(book);
+            books.Add(book);
             return book;
         }
         public void Remove(int id)
         {
-            books2.RemoveAll(p => p.Id == id);
+            books.RemoveAll(p => p.Id == id);
         }
         public bool Update(Book book)
         {
@@ -44,13 +44,13 @@ namespace Booklist
             {
                 throw new ArgumentNullException("item");
             }
-            int index = books2.FindIndex(p => p.Id == book.Id);
+            int index = books.FindIndex(p => p.Id == book.Id);
             if (index == -1)
             {
                 return false;
             }
-            books2.RemoveAt(index);
-            books2.Add(book);
+            books.RemoveAt(index);
+            books.Add(book);
             return true;
         }
     }
